@@ -1,3 +1,15 @@
-for(var i = 0; i < 500; i++) {
-	console.log("Hello World")
-}
+var faker = require('faker');
+
+console.log(faker.internet.email());
+console.log(faker.date.past());
+
+console.log(faker.address.city());
+
+
+
+
+
+
+
+
+
