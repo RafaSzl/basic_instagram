@@ -40,15 +40,54 @@ LIMIT 1;
 
 EXERCISE 5
 
-SELECT users.id, username, count(*)
+# 1 ROZWIAZANIE
+SELECT avg(pictures) AS average_photos # w zewnetrznej petli robi average function
+FROM 
+( 
+    SELECT count(photos.id) as pictures # w wewnetrznej petli robi grup photos by users
+    FROM users
+    LEFT JOIN photos
+    ON photos.user_id = users.id
+    GROUP BY users.id
+) AS average;
+
+# 2 ROZWIAZANIE
+SELECT 
+    COUNT(image_url) AS num_photos,
+    COUNT(DISTINCT users.id) AS num_users,
+    COUNT(image_url)/COUNT(DISTINCT users.id) AS average_photos
 FROM users
-LEFT JOIN photos ON users.id = photos.user_id
-LEFT JOIN comments ON users.id = comments.user_id
-LEFT JOIN likes ON users.id = comments.user_id
-GROUP BY users.id;
+LEFT JOIN photos
+	ON users.id = photos.user_id;
+
+# 3 ROZWIAZANIE
+
+SELECT ((SELECT COUNT(*) FROM photos)/ (SELECT COUNT(*) FROM users));
 
 
+EXERCISE 6
 
+SELECT tag_id, tag_name, COUNT(photo_tags.photo_id) AS photos_tagged 
+FROM photo_tags
+LEFT JOIN tags
+ON photo_tags.tag_id = tags.id
+GROUP BY tag_id
+ORDER BY photos_tagged DESC LIMIT 5;
+
+
+EXERCISE 7
+
+SELECT username, count(photo_id),
+    CASE
+        WHEN count(photo_id) = (SELECT COUNT(*) FROM photos) THEN "probably a bot"
+        ELSE "Maybe not bot"
+    
+    END AS bot_probability
+FROM users
+LEFT JOIN likes
+ON users.id = likes.user_id 
+GROUP BY users.id
+HAVING bot_probability = "probably a bot";
 
 
 
