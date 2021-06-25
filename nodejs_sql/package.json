@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/RafaSzl/basic_instagram#readme",
   "dependencies": {
-    "faker": "^5.5.3"
+    "faker": "^5.5.3",
+    "mysql": "^2.18.1"
   }
 }
