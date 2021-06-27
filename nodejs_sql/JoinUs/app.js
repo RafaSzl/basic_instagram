@@ -23,6 +23,13 @@ app.get("/", function(req, res) {
 	});
 });
 
+
+app.post("/register", function(req, res) {
+	console.log("POST REQUEST SENT TO /REGISTER")
+});
+
+
+
 app.get("/joke", function(req, res) {
 		res.send("some joke that is made");	
 });
